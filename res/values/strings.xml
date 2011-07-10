@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">l2witter</string>
+    <string name="app_scheme">l2witter</string>
+    <string name="app_host_auth">oauth</string>
+</resources>
