@@ -4,12 +4,19 @@ import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.auth.AccessToken;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -40,40 +47,75 @@ public class MainActivity extends Activity {
         startView();
     }
 
-    private boolean isBackButtonLongPressed = false;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater =getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_reauth:
+            // 再認証設定
+            break;
+
+        default:
+            break;
+        }
+        return true;
+    }
+
+    private boolean isBackButtonLongPressed = false;
+/*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (KeyEvent.KEYCODE_BACK == keyCode && 3 < event.getRepeatCount()) {
             Log.d(Const.LoggerTag, "onKeyDown() : back button is long pressed.");
             isBackButtonLongPressed = true;
+            return true;
         } else {
             Log.d(Const.LoggerTag, "nowPless : " + keyCode);
         }
-        return true;
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         Log.d(Const.LoggerTag, "nowPless : " + keyCode);
 
-        if (!isBackButtonLongPressed) {
-            isBackButtonLongPressed = false;
-        } else {
-            applicationFinish();
-        }
 
-        return true;
+        return super.onKeyUp(keyCode, event);
     }
-
-    /**
-     * Application is finished.
-     * All process will be killed.
-     */
-    private void applicationFinish() {
-        Log.d(Const.LoggerTag, "applicationFinish() : aplication is finished. All processes killed");
-        System.exit(RESULT_OK);
+*/
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK &&
+                    3 < event.getRepeatCount()) {
+                        Builder builder = new Builder(this);
+                        // TODO:定数化・リソース化
+                        builder.setMessage("終了しますか?");
+                        builder.setPositiveButton("終了", new OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(Const.LoggerTag, "applicationFinish() : aplication is finished. All processes killed");
+                                System.exit(RESULT_OK);
+                            }
+                        });
+                        builder.setNegativeButton("キャンセル", new OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        builder.setCancelable(true);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+            }
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     @Override
@@ -94,8 +136,6 @@ public class MainActivity extends Activity {
             }
         }
     }
-
-
 
     private void startView() {
         // ここからtwitter周り
