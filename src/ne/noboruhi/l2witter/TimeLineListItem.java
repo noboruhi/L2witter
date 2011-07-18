@@ -17,7 +17,6 @@ public class TimeLineListItem {
 
     public TimeLineListItem(Status status) {
         statusId        = status.getId();
-        // TODO:URL→Bitmap(キャッシュも使うこと！)
         profileImageSrc = status.getUser().getProfileImageURL();
         screenName      = status.getUser().getScreenName();
         statusText      = status.getText();

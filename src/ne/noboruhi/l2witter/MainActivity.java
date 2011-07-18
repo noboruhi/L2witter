@@ -57,51 +57,32 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        /*
         case R.id.menu_reauth:
-            // 再認証設定
+            L2witterApprication l2wApprication = (L2witterApprication)getApplication();
+            l2wApprication.auth();
             break;
+            */
+        case R.id.menu_stream_config:
 
+            break;
         default:
             break;
         }
         return true;
     }
 
-    private boolean isBackButtonLongPressed = false;
-/*
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (KeyEvent.KEYCODE_BACK == keyCode && 3 < event.getRepeatCount()) {
-            Log.d(Const.LoggerTag, "onKeyDown() : back button is long pressed.");
-            isBackButtonLongPressed = true;
-            return true;
-        } else {
-            Log.d(Const.LoggerTag, "nowPless : " + keyCode);
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        Log.d(Const.LoggerTag, "nowPless : " + keyCode);
-
-
-        return super.onKeyUp(keyCode, event);
-    }
-*/
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        Log.d(Const.LoggerTag, "pushed:"+event.getKeyCode());
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK &&
-                    3 < event.getRepeatCount()) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK ) {
                         Builder builder = new Builder(this);
                         // TODO:定数化・リソース化
                         builder.setMessage("終了しますか?");
                         builder.setPositiveButton("終了", new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.d(Const.LoggerTag, "applicationFinish() : aplication is finished. All processes killed");
+                                Log.d(Const.LoggerTag, "aplication is finished. All processes killed");
                                 System.exit(RESULT_OK);
                             }
                         });
@@ -112,8 +93,8 @@ public class MainActivity extends Activity {
                         builder.setCancelable(true);
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
+                        return true;
             }
-            return true;
         }
         return super.dispatchKeyEvent(event);
     }
@@ -139,15 +120,16 @@ public class MainActivity extends Activity {
 
     private void startView() {
         // ここからtwitter周り
-        listener = new L2witterStreamAdapter();
+        listener = new L2witterStreamAdapter(this);
         LedView ledView  = (LedView) findViewById(R.id.ledView1);
         ledView.setTextProducer(listener);
 
         L2witterApprication l2wApp = (L2witterApprication)this.getApplication();
         // TODO:TrackList管理用UI作る
-        //trackList = new String[]{"#l2witter"};
+        //trackList = new String[]{"#えりゅついった","#l2witter"};
         TwitterStream twitterStream = l2wApp.getTwitterStream();
         if (twitterStream != null) {
+            listener.setAuth(twitterStream.getAuthorization());
             // TODO:listener共有して管理する。
             twitterStream.addListener(listener);
             twitterStream.user();
