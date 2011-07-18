@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_stream_config_entries">
+        <item>タイムライン</item>
+        <item>ハッシュタグ</item>
+    </string-array>
+    <string-array name="list_stream_config_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>
