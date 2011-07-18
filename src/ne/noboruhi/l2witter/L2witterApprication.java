@@ -19,7 +19,7 @@ public class L2witterApprication extends Application {
     private OAuthAuthorization oAuth;
     private String oauthAccessToken;
     private String oauthAccessTokenSecret;
-    private static ConfigurationBuilder cbuilder = new ConfigurationBuilder();
+    private ConfigurationBuilder cbuilder = new ConfigurationBuilder();
     private static TwitterStreamFactory streamFactory = new TwitterStreamFactory();
 
 
@@ -62,6 +62,11 @@ public class L2witterApprication extends Application {
         editor.putString("oauthAccessToken", oauthAccessToken);
         editor.putString("oauthAccessTokenSecret", oauthAccessTokenSecret);
         editor.commit();
+        cbuilder = new ConfigurationBuilder();
+        cbuilder.setDebugEnabled(true)
+            .setOAuthConsumerKey(Const.OAuthConsumerKey)
+            .setOAuthConsumerSecret(Const.OAuthConsumerSecret);
+
     }
 
     protected void initializeInstance() {
@@ -107,6 +112,7 @@ public class L2witterApprication extends Application {
             .setOAuthAccessTokenSecret(oauthAccessTokenSecret);
         Log.d(Const.LoggerTag, "oauthAccessToken:"+ oauthAccessToken);
         Log.d(Const.LoggerTag, "oauthAccessTokenSecret:" + oauthAccessTokenSecret);
-        twitterStream = streamFactory.getInstance(new OAuthAuthorization(cbuilder.build()));
+        oAuth = new OAuthAuthorization(cbuilder.build());
+        twitterStream = streamFactory.getInstance(oAuth);
     }
 }

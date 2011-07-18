@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">l2witter</string>
+    <string name="app_name">L2witter</string>
     <string name="app_scheme">l2witter</string>
     <string name="app_host_auth">oauth</string>
-    <string name="menu_stream_config">ストリーム設定</string>
+    <string name="menu_stream_config_title">ストリーム設定</string>
+    <string name="menu_hashtag_config_title">ハッシュタグ設定</string>
     <string name="menu_filter_config">フィルタ設定</string>
     <string name="menu_reauth">再認証</string>
+    <string name="pref_title">設定</string>
+    <string name="pref_stream_config_key">stream_config_key</string>
+    <string name="pref_hashtag_config_key">hashtag_config_key</string>
 </resources>

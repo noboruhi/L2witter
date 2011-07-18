@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android" android:enabled="true">
+  xmlns:android="http://schemas.android.com/apk/res/android" android:enabled="true" android:title="@string/pref_title">
+    <ListPreference android:entryValues="@array/list_stream_config_values" android:entries="@array/list_stream_config_entries" android:title="@string/menu_stream_config_title" android:defaultValue="1" android:key="@string/pref_stream_config_key"></ListPreference>
+    <EditTextPreference android:key="hashtag_config_key" android:defaultValue="#l2witter" android:title="@string/menu_hashtag_config_title" android:enabled="false"></EditTextPreference>
 </PreferenceScreen>
