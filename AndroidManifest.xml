@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="ne.noboruhi.l2witter"
+      package="net.noboruhi.l2witter"
       android:versionCode="1"
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="4" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="L2witterApprication"  >
-        <activity android:name=".MainActivity"
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="net.noboruhi.l2witter.L2witterApprication"  >
+        <activity android:name="net.noboruhi.l2witter.MainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTask" android:screenOrientation="portrait">
             <intent-filter>
@@ -22,6 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".L2witterPreferenceActivity" android:label="@string/app_name"></activity>
+        <activity android:name="net.noboruhi.l2witter.L2witterPreferenceActivity" android:label="@string/app_name"></activity>
     </application>
 </manifest>

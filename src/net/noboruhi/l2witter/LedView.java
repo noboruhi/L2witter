@@ -1,4 +1,4 @@
-package ne.noboruhi.l2witter;
+package net.noboruhi.l2witter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,6 +8,7 @@ import android.graphics.Paint.FontMetrics;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import net.noboruhi.l2witter.R;
 
 public class LedView extends SurfaceView
     implements SurfaceHolder.Callback,Runnable {

@@ -4,6 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <ne.noboruhi.l2witter.LedView android:id="@+id/ledView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></ne.noboruhi.l2witter.LedView>
+    <net.noboruhi.l2witter.LedView android:id="@+id/ledView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></net.noboruhi.l2witter.LedView>
     <ListView android:id="@+id/listView1" android:layout_height="wrap_content" android:layout_width="fill_parent"></ListView>
 </LinearLayout>

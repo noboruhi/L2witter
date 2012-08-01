@@ -1,4 +1,4 @@
-package ne.noboruhi.l2witter;
+package net.noboruhi.l2witter;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
+import net.noboruhi.l2witter.R;
 
 public class L2witterPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     @Override

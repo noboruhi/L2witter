@@ -1,5 +1,6 @@
-package ne.noboruhi.l2witter;
+package net.noboruhi.l2witter;
 
+import net.noboruhi.l2witter.R;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.auth.AccessToken;

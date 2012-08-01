@@ -1,7 +1,8 @@
-package ne.noboruhi.l2witter;
+package net.noboruhi.l2witter;
 
 import java.net.URL;
 import java.util.Date;
+import net.noboruhi.l2witter.R;
 
 import twitter4j.Status;
 

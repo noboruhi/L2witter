@@ -1,4 +1,4 @@
-package ne.noboruhi.l2witter;
+package net.noboruhi.l2witter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.noboruhi.l2witter.R;
 
 import twitter4j.ResponseList;
 import twitter4j.Status;

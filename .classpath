@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/twitter4j-core-android-2.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-media-support-android-2.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-stream-android-2.2.3.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
