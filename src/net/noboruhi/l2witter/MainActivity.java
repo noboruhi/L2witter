@@ -133,17 +133,6 @@ public class MainActivity extends Activity {
     private void startView() {
         L2witterApprication l2wApp = (L2witterApprication)this.getApplication();
 
-
-        AsyncTask<Void, Void, Void> downloadTask = new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                // TODO 自動生成されたメソッド・スタブ
-                return null;
-            }
-        };
-        downloadTask.execute((Void[])null);
-
         TwitterStream twitterStream = l2wApp.getTwitterStream();
         if (twitterStream != null) {
             //if (!litened) {
