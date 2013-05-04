@@ -10,4 +10,6 @@ public class Const {
     public static final String OAuthConsumerSecret    = "Fugaaaaaaaaaaaaaaaaa!";
     // TLの保持数。
     public static final int StatusListSizeMax = 20;
+    // デフォルトのハッシュタグ
+    public static final String DefaultHashTag = "#l2witter";
 }

@@ -20,6 +20,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.UserStreamAdapter;
 import twitter4j.auth.Authorization;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,9 +40,19 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
     private static final ArrayList<String> userNameList = new ArrayList<String>();
     private static final TwitterFactory twitterFactory = new TwitterFactory();
     private Authorization auth;
+    private boolean isFirst = true;
+    private ProgressDialog waitDialog = null;
 
     public void setAuth(Authorization auth) {
         this.auth = auth;
+    }
+
+    public void isFirst () {
+        this.isFirst = true;
+    }
+
+    public void setWaitDialog(ProgressDialog waitDialog) {
+        this.waitDialog = waitDialog;
     }
 
     // 文字列フィルタ。URLの除去なんかに使う。
@@ -72,7 +83,15 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
         return statusList;
     }
 
+    @Override
     public void onStatus(Status status) {
+        if (isFirst) {
+            if (waitDialog != null) {
+                waitDialog.dismiss();
+            }
+            this.isFirst = false;
+        }
+
         nextText = status.getText();
         Log.d(Const.LoggerTag,nextText);
 
@@ -90,18 +109,22 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
         }
     }
 
+    @Override
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
         Log.d(Const.LoggerTag,"Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
     }
 
+    @Override
     public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
         Log.d(Const.LoggerTag,"Got track limitation notice:" + numberOfLimitedStatuses);
     }
 
+    @Override
     public void onScrubGeo(long userId, long upToStatusId) {
         Log.d(Const.LoggerTag,"Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
     }
 
+    @Override
     public void onException(Exception ex) {
         ex.printStackTrace();
     }

@@ -10,4 +10,8 @@
     <string name="pref_title">設定</string>
     <string name="pref_stream_config_key">stream_config_key</string>
     <string name="pref_hashtag_config_key">hashtag_config_key</string>
+    <string name="channel_select_timeline_title">タイムライン</string>
+    <string name="channel_select_hashtag_title">ハッシュタグ</string>
+    <string name="channel_select_userlist_title">ユーザリスト</string>
+    <string name="channel_start_title">開始</string>
 </resources>

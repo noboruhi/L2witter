@@ -14,5 +14,5 @@
     <TextView
     android:id="@+id/textview"
     android:layout_width="wrap_content"
-    android:gravity="center" android:layout_height="75dip" android:padding="5dip" android:textSize="30dip"/>
+    android:gravity="center" android:layout_height="48dip" android:padding="5dip" android:textSize="25dip"/>
 </LinearLayout>

@@ -10,7 +10,7 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="net.noboruhi.l2witter.L2witterApprication"  >
         <activity android:name="net.noboruhi.l2witter.MainActivity"
                   android:label="@string/app_name"
-                  android:launchMode="singleTask" android:screenOrientation="portrait">
+                  android:launchMode="singleTask" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

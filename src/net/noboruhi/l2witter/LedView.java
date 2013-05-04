@@ -84,7 +84,6 @@ public class LedView extends SurfaceView
             canvas = holder.lockCanvas();
             if (canvas != null) {
                 canvas.drawColor(Color.BLACK);
-
                 int ledSize = viewSize / Const.ledNum ;
 
                 offset++;
@@ -99,12 +98,21 @@ public class LedView extends SurfaceView
                     writeLedText();
                 }
 
-                for (int i = 0;i < Const.ledNum;i++) {
+                // for landscape
+                int screenDotNumX = getMeasuredWidth() / ledSize;
+                for (int i = 0;i < screenDotNumX;i++) {
                     for (int j = 0;j < Const.ledNum;j++) {
-                        if (ledBitmap.getPixel(i + offset, j) == dotPaint.getColor()) {
-                            canvas.drawCircle(ledSize * i + ledSize / 2,
-                                    ledSize  * j + ledSize / 2,
-                                    ledSize /2 , ledPaint);
+                        if (ledBitmap.getWidth() > i + offset) {
+                            if (ledBitmap.getPixel(i + offset, j) == dotPaint.getColor()) {
+                                canvas.drawCircle(ledSize * i + ledSize / 2,
+                                        ledSize  * j + ledSize / 2,
+                                        ledSize /2 , ledPaint);
+								/*
+                                canvas.drawRect(ledSize * i ,
+												  ledSize  * j ,
+												ledSize * (i + 1) , ledSize * (j +1), ledPaint);
+												*/
+                            }
                         }
                     }
                 }
@@ -127,7 +135,7 @@ public class LedView extends SurfaceView
         ledCanvas = new Canvas(ledBitmap);
         FontMetrics metrics = dotPaint.getFontMetrics();
         ledCanvas.drawColor(Color.WHITE);
-        ledCanvas.drawText(writeText, Const.ledNum , - metrics.ascent  , dotPaint);
+        ledCanvas.drawText(writeText, Const.ledNum , - metrics.descent / 2 - metrics.ascent  , dotPaint);
     }
 
     @Override
@@ -139,7 +147,7 @@ public class LedView extends SurfaceView
         } else {
             viewSize = width;
         }
-        setMeasuredDimension(viewSize, viewSize);
+        setMeasuredDimension(width, height);
     }
 
 }

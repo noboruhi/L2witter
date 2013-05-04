@@ -5,6 +5,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import net.noboruhi.l2witter.R;
 
@@ -15,6 +16,14 @@ public class L2witterPreferenceActivity extends PreferenceActivity implements On
         addPreferencesFromResource(R.xml.pref);
         ListPreference listPreference = (ListPreference)getPreferenceScreen().findPreference(getString(R.string.pref_stream_config_key));
         EditTextPreference edittextPreference = (EditTextPreference)getPreferenceScreen().findPreference(getString(R.string.pref_hashtag_config_key));
+        edittextPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                String vale = newValue.toString();
+                preference.setSummary(vale);
+                return true;
+            }
+        });
         edittextPreference.setSummary(edittextPreference.getText());
         String value = listPreference.getValue();
         if ("2".equals(value)) {
@@ -30,7 +39,7 @@ public class L2witterPreferenceActivity extends PreferenceActivity implements On
             String value = sharedPreferences.getString(key,"1");
             if ("2".equals(value)) {
                 edittextPreference.setEnabled(true);
-                String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), "#l2witter");
+                String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), Const.DefaultHashTag);
                 edittextPreference.setSummary(hashtag);
             } else {
                 edittextPreference.setEnabled(false);
@@ -38,7 +47,7 @@ public class L2witterPreferenceActivity extends PreferenceActivity implements On
         } else if (getString(R.string.pref_stream_config_key).equals(key)) {
             String hashtagConfigKey = getString(R.string.pref_hashtag_config_key);
             EditTextPreference edittextPreference = (EditTextPreference)getPreferenceScreen().findPreference(hashtagConfigKey);
-            String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), "#l2witter");
+            String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), Const.DefaultHashTag);
             edittextPreference.setSummary(hashtag);
         }
     }

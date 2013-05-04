@@ -1,11 +1,13 @@
 package net.noboruhi.l2witter;
 
+import net.noboruhi.l2witter.R;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.auth.AccessToken;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -16,6 +18,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +28,7 @@ public class MainActivity extends Activity {
 
     private L2witterStreamAdapter listener;
     private static final int PREF_ID = 0;
+    private boolean litened = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,14 +47,12 @@ public class MainActivity extends Activity {
         startView();
     }
 
-    /*
-    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater =getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         return true;
     }
-    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -130,14 +133,14 @@ public class MainActivity extends Activity {
 
         TwitterStream twitterStream = l2wApp.getTwitterStream();
         if (twitterStream != null) {
-            //if (!litened) {
+            if (!litened) {
                 listener.setAuth(twitterStream.getAuthorization());
                 twitterStream.addListener(listener);
-            //    litened = true;
-            //}
+                litened = true;
+            }
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             String stream  = sp.getString(getString(R.string.pref_stream_config_key), "1");
-            String hashtag = sp.getString(getString(R.string.pref_hashtag_config_key), "#l2witter");
+            String hashtag = sp.getString(getString(R.string.pref_hashtag_config_key), Const.DefaultHashTag);
 
             if ("1".equals(stream)) {
                 twitterStream.user();
@@ -146,6 +149,17 @@ public class MainActivity extends Activity {
                 twitterStream.user(trackList);
                 twitterStream.filter(new FilterQuery(0, null, trackList));
             }
+            // TODO:LED View止める
+            // TODO:ダイアログとLED Viewどっちがいいかな？
+            ProgressDialog waitDialog  = new ProgressDialog(this);
+            // TODO:定数化・リソース化
+            waitDialog.setTitle("ツイート待機中");
+            waitDialog.setMessage("ツイートが流れるまでお待ちください...");
+            waitDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            waitDialog.show();
+            listener.isFirst();
+            listener.setWaitDialog(waitDialog);
+
         }
     }
 
