@@ -1,8 +1,6 @@
 package net.noboruhi.l2witter;
 
-import java.net.URL;
 import java.util.Date;
-import net.noboruhi.l2witter.R;
 
 import twitter4j.Status;
 
@@ -11,7 +9,7 @@ import android.graphics.Bitmap;
 public class TimeLineListItem {
     public long statusId;
     public Bitmap profileImage;
-    public URL profileImageSrc;
+    public String profileImageSrc;
     public String screenName;
     public String statusText;
     public Date statusCreatedAt;

@@ -1,6 +1,5 @@
 package net.noboruhi.l2witter;
 
-import net.noboruhi.l2witter.R;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.auth.AccessToken;
@@ -8,18 +7,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,7 +24,6 @@ public class MainActivity extends Activity {
 
     private L2witterStreamAdapter listener;
     private static final int PREF_ID = 0;
-    private boolean litened = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

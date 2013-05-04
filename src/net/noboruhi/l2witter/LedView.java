@@ -8,7 +8,6 @@ import android.graphics.Paint.FontMetrics;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import net.noboruhi.l2witter.R;
 
 public class LedView extends SurfaceView
     implements SurfaceHolder.Callback,Runnable {

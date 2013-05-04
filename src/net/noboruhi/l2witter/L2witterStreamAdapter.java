@@ -139,7 +139,7 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
                             responseList = twitter.lookupUsers(userNameList.toArray(new String[0]));
                         //
                         for (User user : responseList) {
-                            URL url =  user.getProfileImageURL();
+                            URL url =  new URL(user.getProfileImageURL());
                             Log.d(Const.LoggerTag, "Start Get icon url: "+url);
                             URLConnection connection = url.openConnection();
                             InputStream inputStream = connection.getInputStream();

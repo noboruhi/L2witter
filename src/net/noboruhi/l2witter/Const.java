@@ -1,7 +1,5 @@
 package net.noboruhi.l2witter;
 
-import net.noboruhi.l2witter.R;
-
 public class Const {
     // ログに吐くときのタグ
     public static final String LoggerTag = "l2w";
