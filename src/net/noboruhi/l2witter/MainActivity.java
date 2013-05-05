@@ -76,6 +76,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // ハッシュタグ設定から戻ってきた。設定も変更されている。
         if (requestCode == PREF_ID && resultCode == RESULT_FIRST_USER + 1) {
             startView();
         }

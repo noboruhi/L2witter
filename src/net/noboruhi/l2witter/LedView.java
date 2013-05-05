@@ -18,7 +18,6 @@ public class LedView extends SurfaceView
     private Bitmap ledBitmap;
     private Canvas ledCanvas;
     private Paint  dotPaint;
-    private String writeText  = ""; //"L2Witter started...";
     private String nextText   = "";
     private int viewSize = 0;
     private TextProducer textProducer = null;
@@ -77,9 +76,9 @@ public class LedView extends SurfaceView
         ledPaint.setStyle(Paint.Style.FILL);
         ledPaint.setColor(Color.rgb(255, 128, 0));
 
-        writeLedText();
-
         int offset = 0;
+        String writeText  = ""; //"L2Witter started...";
+        //writeLedText(writeText);
         while(thread != null) {
             canvas = holder.lockCanvas();
             if (canvas != null) {
@@ -89,33 +88,15 @@ public class LedView extends SurfaceView
                 offset++;
                 if (offset > ledCanvas.getWidth() - Const.ledNum) {
                     offset = 0;
-                    if (textProducer != null) {
-                        nextText = textProducer.popString();
-                    }
+                    writeText  = ""; //"L2Witter started...";
+                    nextText = textProducer.popString();
                     if (!"".equals(nextText)) {
                         writeText = nextText;
                     }
-                    writeLedText();
+                    writeLedText(writeText);
                 }
-
-                // for landscape
-                int screenDotNumX = getMeasuredWidth() / ledSize;
-                for (int i = 0;i < screenDotNumX;i++) {
-                    for (int j = 0;j < Const.ledNum;j++) {
-                        if (ledBitmap.getWidth() > i + offset) {
-                            if (ledBitmap.getPixel(i + offset, j) == dotPaint.getColor()) {
-                                canvas.drawCircle(ledSize * i + ledSize / 2,
-                                        ledSize  * j + ledSize / 2,
-                                        ledSize /2 , ledPaint);
-								/*
-                                canvas.drawRect(ledSize * i ,
-												  ledSize  * j ,
-												ledSize * (i + 1) , ledSize * (j +1), ledPaint);
-												*/
-                            }
-                        }
-                    }
-                }
+                
+                drawChar(canvas,ledPaint,ledSize,offset);
             }
             holder.unlockCanvasAndPost(canvas);
 
@@ -126,10 +107,39 @@ public class LedView extends SurfaceView
         }
     }
 
+    /**
+     * 文字を描画する
+     * @param canvas 描画先のcanvas
+     * @param ledPaint led
+     * @param ledSize ledのサイズ
+     * @param offset オフセット
+     */
+    private void drawChar(Canvas canvas,Paint ledPaint,int ledSize,int offset) {
+        // for landscape
+        int screenDotNumX = getMeasuredWidth() / ledSize;
+        for (int i = 0;i < screenDotNumX;i++) {
+            for (int j = 0;j < Const.ledNum;j++) {
+                if (ledBitmap.getWidth() > i + offset) {
+                    if (ledBitmap.getPixel(i + offset, j) == dotPaint.getColor()) {
+                        canvas.drawCircle(ledSize * i + ledSize / 2,
+                                ledSize  * j + ledSize / 2,
+                                ledSize /2 , ledPaint);
+                        /*
+                        canvas.drawRect(ledSize * i ,
+                                ledSize  * j ,
+                                ledSize * (i + 1) , ledSize * (j +1), ledPaint);
+                        */
+                    }
+                }
+            }
+        }
+        
+    }
+    
     /*
      * スクロールさせる文字列をLEDバッファに描いておく
      */
-    private void writeLedText() {
+    private void writeLedText(String writeText) {
         int bitmapLength = (int)dotPaint.measureText(writeText);
         ledBitmap = Bitmap.createBitmap(bitmapLength + Const.ledNum * 2, Const.ledNum, Bitmap.Config.RGB_565);
         ledCanvas = new Canvas(ledBitmap);

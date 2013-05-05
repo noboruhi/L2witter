@@ -11,7 +11,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.util.Log;
-
+/**
+ * 
+ * @author noboruhi
+ *
+ */
 public class L2witterApprication extends Application {
     private static L2witterApprication sInstance;
     private static TwitterStream twitterStream;
