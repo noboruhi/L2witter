@@ -63,6 +63,7 @@ public class MainActivity extends Activity {
             l2wApprication.auth();
             break;
             */
+        // 設定変更
         case R.id.menu_stream_config:
             Intent intent = new Intent(this,L2witterPreferenceActivity.class);
             startActivityForResult(intent, PREF_ID);
@@ -78,6 +79,8 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // ハッシュタグ設定から戻ってきた。設定も変更されている。
         if (requestCode == PREF_ID && resultCode == RESULT_FIRST_USER + 1) {
+            LedView ledView  = (LedView) findViewById(R.id.ledView1);
+            ledView.reset();
             startView();
         }
     }
@@ -150,8 +153,6 @@ public class MainActivity extends Activity {
                 twitterStream.user(trackList);
                 twitterStream.filter(new FilterQuery(0, null, trackList));
             }
-            // TODO:LED View止める
-            // TODO:ダイアログとLED Viewどっちがいいかな？
             ProgressDialog waitDialog  = new ProgressDialog(this);
             // TODO:定数化・リソース化
             waitDialog.setTitle("ツイート待機中");
@@ -160,7 +161,6 @@ public class MainActivity extends Activity {
             waitDialog.show();
             listener.isFirst();
             listener.setWaitDialog(waitDialog);
-
         }
     }
 

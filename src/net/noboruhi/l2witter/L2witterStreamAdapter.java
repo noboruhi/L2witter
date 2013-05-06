@@ -16,6 +16,11 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
 
+/**
+ * UserStreamからテキストをキューイングする為のクラス
+ * @author noboruhi
+ *
+ */
 public class L2witterStreamAdapter extends UserStreamAdapter implements TextProducer {
     private String nextText = "";
     private ArrayList<TimeLineListItem> statusList = new ArrayList<TimeLineListItem>();
@@ -31,6 +36,7 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
 
     public void isFirst () {
         this.isFirst = true;
+        this.statusList.clear();
     }
 
     public void setWaitDialog(ProgressDialog waitDialog) {
@@ -67,6 +73,7 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
 
     @Override
     public void onStatus(Status status) {
+        // ツイート待ちのダイアログが表示されていた場合には消す
         if (isFirst) {
             if (waitDialog != null) {
                 waitDialog.dismiss();
@@ -74,16 +81,18 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
             this.isFirst = false;
         }
 
+        // 「今」のステータスを次表示するテキストとする
         nextText = status.getText();
         Log.d(Const.LOGGER_TAG,nextText);
 
+        // ステータスリストに追加
         TimeLineListItem item = new TimeLineListItem(status);
         statusList.add(item);
         // 最大サイズを超えたら末尾を消す。
         if (Const.STATUS_LIST_SIZE_MAX < statusList.size()) {
             statusList.remove(0);
         }
-        // 画像取得の準備
+        // アイコン取得するアカウント名をリストに加える
         String userName = status.getUser().getScreenName();
         if (! cache.containsKey(userName)) {
             userNameList.add(userName);

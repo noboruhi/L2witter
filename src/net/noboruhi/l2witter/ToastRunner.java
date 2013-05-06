@@ -13,7 +13,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * ユーザ名を表示するトーストを表示する為のランナー
+ * @author noboruhi
+ *
+ */
 public class ToastRunner implements Runnable {
     private ArrayList<TimeLineListItem> statusList = new ArrayList<TimeLineListItem>();
     private Context context = null;
@@ -21,6 +25,14 @@ public class ToastRunner implements Runnable {
     private ConcurrentMap<String, Bitmap> cache = null;
     private ArrayList<String> userNameList = null;
 
+    /**
+     * コンストラクタ
+     * @param statusList
+     * @param context
+     * @param auth
+     * @param cache
+     * @param userNameList
+     */
     public ToastRunner(ArrayList<TimeLineListItem> statusList,Context context,
             Authorization auth,ConcurrentMap<String, Bitmap> cache,
             ArrayList<String> userNameList) {
@@ -31,15 +43,21 @@ public class ToastRunner implements Runnable {
         this.userNameList = userNameList;
     }
     
+    /**
+     * トーストを表示する処理
+     */
     @Override
     public void run() {
+        // TODO:ここを設定でニックネームか本名を選んで表示できるようにする
         String screenName = statusList.get(statusList.size() - 1).screenName;
+        
+        // レイアウト設定
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.custom_toast,null);
         TextView textView = (TextView)view.findViewById(R.id.textview);
         ImageView iv = (ImageView)view.findViewById(R.id.imageview);
-        //Toast toast = Toast.makeText(context,screenName,Toast.LENGTH_LONG);
         
+        // トースト設定
         Toast toast = new Toast(context);
         textView.setText("@" + screenName);
         if (cache.containsKey(screenName)) {
@@ -48,8 +66,11 @@ public class ToastRunner implements Runnable {
         }
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(view);
+        
+        // 表示
         toast.show();
 
+        // 裏でアイコンのダウンロードタスクを実行する。
         IconDownloadTask downloadTask = new IconDownloadTask(auth,cache,userNameList);
         downloadTask.execute((Void[])null);
     }

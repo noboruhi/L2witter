@@ -31,6 +31,9 @@ public class L2witterPreferenceActivity extends PreferenceActivity implements On
         }
     }
 
+    /**
+     * 設定変更時のイベント処理
+     */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
         setResult(RESULT_FIRST_USER + 1);
 

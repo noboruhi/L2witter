@@ -29,6 +29,12 @@ public class IconDownloadTask extends AsyncTask<Void, Void, Void> {
     private ArrayList<String> userNameList = null;
     private static final TwitterFactory twitterFactory = new TwitterFactory();
 
+    /**
+     * コンストラクタ
+     * @param auth
+     * @param cache
+     * @param userNameList
+     */
     public IconDownloadTask(Authorization auth,ConcurrentMap<String, Bitmap> cache,
             ArrayList<String> userNameList) {
         this.auth = auth;
@@ -36,14 +42,21 @@ public class IconDownloadTask extends AsyncTask<Void, Void, Void> {
         this.userNameList = userNameList;
     }
     
+    /**
+     * ユーザアイコンを取得するバックグラウンド処理
+     */
     @Override
     protected Void doInBackground(Void... params) {
-        // TwitterのAPIでまとめてURLを求める。
         Twitter twitter = twitterFactory.getInstance(auth);
-        ResponseList<User> responseList;
+        // ユーザ情報をまとめて取得
+        ResponseList<User> responseList = null;
         try {
             responseList = twitter.lookupUsers(userNameList.toArray(new String[0]));
-            //
+        } catch (TwitterException e) {
+            Log.e(Const.LOGGER_TAG,  e.getMessage());
+        }
+        // まとめて取得したユーザ名に対してアイコンを得る
+        try {
             for (User user : responseList) {
                 URL url =  new URL(user.getProfileImageURL());
                 Log.d(Const.LOGGER_TAG, "Start Get icon url: "+url);
@@ -51,15 +64,14 @@ public class IconDownloadTask extends AsyncTask<Void, Void, Void> {
                 InputStream inputStream = connection.getInputStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 if (bitmap != null) {
-                  cache.put(user.getScreenName(),bitmap );
-                  Log.d(Const.LOGGER_TAG, "Chached icon :@"+user.getScreenName());
+                    cache.put(user.getScreenName(),bitmap );
+                    Log.d(Const.LOGGER_TAG, "Chached icon :@"+user.getScreenName());
                 }
             }
-        } catch (TwitterException e) {
-            Log.e(Const.LOGGER_TAG,  e.getMessage());
         } catch (IOException e) {
             Log.e(Const.LOGGER_TAG,  e.getMessage());
         } finally {
+            // 取得完了したら名前リストをクリアする
             userNameList.clear();
         }
         return null;

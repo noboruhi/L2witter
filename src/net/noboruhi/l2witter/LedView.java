@@ -9,6 +9,11 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * LED風に文字を表示するView
+ * @author noboruhi
+ *
+ */
 public class LedView extends SurfaceView
     implements SurfaceHolder.Callback,Runnable {
 
@@ -21,7 +26,11 @@ public class LedView extends SurfaceView
     private String nextText   = "";
     private int viewSize = 0;
     private TextProducer textProducer = null;
-
+    /**
+     * リセットフラグ
+     */
+    private boolean reset = false;
+    
     public void setTextProducer(TextProducer textProducer) {
         this.textProducer = textProducer;
     }
@@ -40,7 +49,16 @@ public class LedView extends SurfaceView
         super(context, attrs, defStyle);
         initView();
     }
+    
+    public void reset() {
+        this.reset = true;
+    }
 
+    /**
+     * Viewの初期化
+     * 
+     * Viewに必要な設定をしている
+     */
     private void initView() {
         holder = getHolder();
         holder.addCallback(this);
@@ -68,7 +86,9 @@ public class LedView extends SurfaceView
         thread = null;
     }
 
-    //スレッドの処理
+    /**
+     * LEDアニメーション処理
+     */
     public void run() {
         Canvas canvas;
         Paint ledPaint = new Paint();
@@ -77,18 +97,23 @@ public class LedView extends SurfaceView
         ledPaint.setColor(Color.rgb(255, 128, 0));
 
         int offset = 0;
-        String writeText  = ""; //"L2Witter started...";
-        //writeLedText(writeText);
+        String writeText  = "";
+        writeLedText(writeText);
         while(thread != null) {
             canvas = holder.lockCanvas();
             if (canvas != null) {
                 canvas.drawColor(Color.BLACK);
                 int ledSize = viewSize / Const.LED_NUM ;
-
+                
                 offset++;
-                if (offset > ledCanvas.getWidth() - Const.LED_NUM) {
+                if (reset) {
                     offset = 0;
-                    writeText  = ""; //"L2Witter started...";
+                    writeLedText("");
+                    reset = false;
+                // 文章を表示しきったら次の文章を取得する
+                } else if (offset > ledBitmap.getWidth() - Const.LED_NUM) {
+                    offset = 0;
+                    writeText  = "";
                     nextText = textProducer.popString();
                     if (!"".equals(nextText)) {
                         writeText = nextText;
@@ -142,10 +167,12 @@ public class LedView extends SurfaceView
     private void writeLedText(String writeText) {
         int bitmapLength = (int)dotPaint.measureText(writeText);
         ledBitmap = Bitmap.createBitmap(bitmapLength + Const.LED_NUM * 2, Const.LED_NUM, Bitmap.Config.RGB_565);
-        ledCanvas = new Canvas(ledBitmap);
         FontMetrics metrics = dotPaint.getFontMetrics();
+        // canvasを通じてBitmapに描画
+        ledCanvas = new Canvas(ledBitmap);
         ledCanvas.drawColor(Color.WHITE);
         ledCanvas.drawText(writeText, Const.LED_NUM , - metrics.descent / 2 - metrics.ascent  , dotPaint);
+        
     }
 
     @Override
