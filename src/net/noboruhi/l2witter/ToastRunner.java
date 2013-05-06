@@ -44,7 +44,7 @@ public class ToastRunner implements Runnable {
         textView.setText("@" + screenName);
         if (cache.containsKey(screenName)) {
             iv.setImageBitmap(cache.get(screenName));
-            Log.d(Const.LoggerTag, "Set icon :@"+screenName);
+            Log.d(Const.LOGGER_TAG, "Set icon :@"+screenName);
         }
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(view);

@@ -68,8 +68,8 @@ public class L2witterApprication extends Application {
         editor.commit();
         cbuilder = new ConfigurationBuilder();
         cbuilder.setDebugEnabled(true)
-            .setOAuthConsumerKey(Const.OAuthConsumerKey)
-            .setOAuthConsumerSecret(Const.OAuthConsumerSecret);
+            .setOAuthConsumerKey(KeysConst.OAUTH_CONSUMER_KEY)
+            .setOAuthConsumerSecret(KeysConst.OAUTH_CONSUMER_SECRET);
 
     }
 
@@ -82,8 +82,8 @@ public class L2witterApprication extends Application {
         oauthAccessTokenSecret  = oaPref.getString("oauthAccessTokenSecret","");
 
         cbuilder.setDebugEnabled(true)
-            .setOAuthConsumerKey(Const.OAuthConsumerKey)
-            .setOAuthConsumerSecret(Const.OAuthConsumerSecret);
+            .setOAuthConsumerKey(KeysConst.OAUTH_CONSUMER_KEY)
+            .setOAuthConsumerSecret(KeysConst.OAUTH_CONSUMER_SECRET);
 
         if ("".equals(oauthAccessToken) || "".equals(oauthAccessTokenSecret) ) {
             auth();
@@ -102,7 +102,7 @@ public class L2witterApprication extends Application {
             // TODO:定数化
             authUrl = oAuth.getOAuthRequestToken("l2witter://oauth").getAuthorizationURL();
         } catch (Exception e) {
-            Log.e(Const.LoggerTag, e.getMessage());
+            Log.e(Const.LOGGER_TAG, e.getMessage());
             return;
         }
 
@@ -114,8 +114,8 @@ public class L2witterApprication extends Application {
     public void startStream() {
         cbuilder.setOAuthAccessToken(oauthAccessToken)
             .setOAuthAccessTokenSecret(oauthAccessTokenSecret);
-        Log.d(Const.LoggerTag, "oauthAccessToken:"+ oauthAccessToken);
-        Log.d(Const.LoggerTag, "oauthAccessTokenSecret:" + oauthAccessTokenSecret);
+        Log.d(Const.LOGGER_TAG, "oauthAccessToken:"+ oauthAccessToken);
+        Log.d(Const.LOGGER_TAG, "oauthAccessTokenSecret:" + oauthAccessTokenSecret);
         oAuth = new OAuthAuthorization(cbuilder.build());
         twitterStream = streamFactory.getInstance(oAuth);
     }

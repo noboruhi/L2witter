@@ -49,7 +49,7 @@ public class LedView extends SurfaceView
         dotPaint.setAntiAlias(false);
         dotPaint.setColor(Color.BLACK);
         dotPaint.setStyle(Paint.Style.FILL);
-        dotPaint.setTextSize(Const.ledNum);
+        dotPaint.setTextSize(Const.LED_NUM);
     }
 
     public void setNextText(String nextText) {
@@ -83,10 +83,10 @@ public class LedView extends SurfaceView
             canvas = holder.lockCanvas();
             if (canvas != null) {
                 canvas.drawColor(Color.BLACK);
-                int ledSize = viewSize / Const.ledNum ;
+                int ledSize = viewSize / Const.LED_NUM ;
 
                 offset++;
-                if (offset > ledCanvas.getWidth() - Const.ledNum) {
+                if (offset > ledCanvas.getWidth() - Const.LED_NUM) {
                     offset = 0;
                     writeText  = ""; //"L2Witter started...";
                     nextText = textProducer.popString();
@@ -118,7 +118,7 @@ public class LedView extends SurfaceView
         // for landscape
         int screenDotNumX = getMeasuredWidth() / ledSize;
         for (int i = 0;i < screenDotNumX;i++) {
-            for (int j = 0;j < Const.ledNum;j++) {
+            for (int j = 0;j < Const.LED_NUM;j++) {
                 if (ledBitmap.getWidth() > i + offset) {
                     if (ledBitmap.getPixel(i + offset, j) == dotPaint.getColor()) {
                         canvas.drawCircle(ledSize * i + ledSize / 2,
@@ -141,11 +141,11 @@ public class LedView extends SurfaceView
      */
     private void writeLedText(String writeText) {
         int bitmapLength = (int)dotPaint.measureText(writeText);
-        ledBitmap = Bitmap.createBitmap(bitmapLength + Const.ledNum * 2, Const.ledNum, Bitmap.Config.RGB_565);
+        ledBitmap = Bitmap.createBitmap(bitmapLength + Const.LED_NUM * 2, Const.LED_NUM, Bitmap.Config.RGB_565);
         ledCanvas = new Canvas(ledBitmap);
         FontMetrics metrics = dotPaint.getFontMetrics();
         ledCanvas.drawColor(Color.WHITE);
-        ledCanvas.drawText(writeText, Const.ledNum , - metrics.descent / 2 - metrics.ascent  , dotPaint);
+        ledCanvas.drawText(writeText, Const.LED_NUM , - metrics.descent / 2 - metrics.ascent  , dotPaint);
     }
 
     @Override

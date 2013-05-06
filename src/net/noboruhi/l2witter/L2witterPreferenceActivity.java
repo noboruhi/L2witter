@@ -39,7 +39,7 @@ public class L2witterPreferenceActivity extends PreferenceActivity implements On
             String value = sharedPreferences.getString(key,"1");
             if ("2".equals(value)) {
                 edittextPreference.setEnabled(true);
-                String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), Const.DefaultHashTag);
+                String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), Const.DEFAULT_HASH_TAG);
                 edittextPreference.setSummary(hashtag);
             } else {
                 edittextPreference.setEnabled(false);
@@ -47,7 +47,7 @@ public class L2witterPreferenceActivity extends PreferenceActivity implements On
         } else if (getString(R.string.pref_stream_config_key).equals(key)) {
             String hashtagConfigKey = getString(R.string.pref_hashtag_config_key);
             EditTextPreference edittextPreference = (EditTextPreference)getPreferenceScreen().findPreference(hashtagConfigKey);
-            String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), Const.DefaultHashTag);
+            String hashtag =  sharedPreferences.getString(getString(R.string.pref_hashtag_config_key), Const.DEFAULT_HASH_TAG);
             edittextPreference.setSummary(hashtag);
         }
     }

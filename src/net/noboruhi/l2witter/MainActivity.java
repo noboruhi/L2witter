@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Log.d(Const.LoggerTag, "pushed:"+event.getKeyCode());
+        Log.d(Const.LOGGER_TAG, "pushed:"+event.getKeyCode());
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_BACK ) {
                 Builder builder = new Builder(this);
@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
                 builder.setMessage("終了しますか?");
                 builder.setPositiveButton("終了", new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d(Const.LoggerTag, "aplication is finished. All processes killed");
+                        Log.d(Const.LOGGER_TAG, "aplication is finished. All processes killed");
                         System.exit(RESULT_OK);
                     }
                 });
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
                 l2wapp.startStream();
                 startView();
             } catch (Exception e) {
-                Log.e(Const.LoggerTag, e.getMessage());
+                Log.e(Const.LOGGER_TAG, e.getMessage());
             }
         }
     }
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
             }
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             String stream  = sp.getString(getString(R.string.pref_stream_config_key), "1");
-            String hashtag = sp.getString(getString(R.string.pref_hashtag_config_key), Const.DefaultHashTag);
+            String hashtag = sp.getString(getString(R.string.pref_hashtag_config_key), Const.DEFAULT_HASH_TAG);
 
             if ("1".equals(stream)) {
                 twitterStream.user();

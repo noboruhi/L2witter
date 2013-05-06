@@ -1,28 +1,24 @@
 package net.noboruhi.l2witter;
-
+/**
+ * 定数クラス
+ * @author noboruhi
+ *
+ */
 public class Const {
     /** 
      * ログに吐くときのタグ
      */
-    public static final String LoggerTag = "l2w";
+    public static final String LOGGER_TAG = "l2w";
     /**
      *  LEDの個数
      */
-    public static final int ledNum = 32;
-    /** 
-     * Twitterコンシューマーキー
-     */
-    public static final String OAuthConsumerKey       = "Hogeeeeeeeeeeeeeeeee";
-    /** 
-     * Twitterコンシューマーシークレット
-     */
-    public static final String OAuthConsumerSecret    = "Fugaaaaaaaaaaaaaaaaa";
+    public static final int LED_NUM = 32;
     /**
      * ツイートの保持数
      */
-    public static final int StatusListSizeMax = 20;
+    public static final int STATUS_LIST_SIZE_MAX = 20;
     /**
      *  デフォルトのハッシュタグ
      */
-    public static final String DefaultHashTag = "#l2witter";
+    public static final String DEFAULT_HASH_TAG = "#l2witter";
 }

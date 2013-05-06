@@ -46,19 +46,19 @@ public class IconDownloadTask extends AsyncTask<Void, Void, Void> {
             //
             for (User user : responseList) {
                 URL url =  new URL(user.getProfileImageURL());
-                Log.d(Const.LoggerTag, "Start Get icon url: "+url);
+                Log.d(Const.LOGGER_TAG, "Start Get icon url: "+url);
                 URLConnection connection = url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 if (bitmap != null) {
                   cache.put(user.getScreenName(),bitmap );
-                  Log.d(Const.LoggerTag, "Chached icon :@"+user.getScreenName());
+                  Log.d(Const.LOGGER_TAG, "Chached icon :@"+user.getScreenName());
                 }
             }
         } catch (TwitterException e) {
-            Log.e(Const.LoggerTag,  e.getMessage());
+            Log.e(Const.LOGGER_TAG,  e.getMessage());
         } catch (IOException e) {
-            Log.e(Const.LoggerTag,  e.getMessage());
+            Log.e(Const.LOGGER_TAG,  e.getMessage());
         } finally {
             userNameList.clear();
         }

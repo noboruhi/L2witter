@@ -75,35 +75,35 @@ public class L2witterStreamAdapter extends UserStreamAdapter implements TextProd
         }
 
         nextText = status.getText();
-        Log.d(Const.LoggerTag,nextText);
+        Log.d(Const.LOGGER_TAG,nextText);
 
         TimeLineListItem item = new TimeLineListItem(status);
         statusList.add(item);
         // 最大サイズを超えたら末尾を消す。
-        if (Const.StatusListSizeMax < statusList.size()) {
+        if (Const.STATUS_LIST_SIZE_MAX < statusList.size()) {
             statusList.remove(0);
         }
         // 画像取得の準備
         String userName = status.getUser().getScreenName();
         if (! cache.containsKey(userName)) {
             userNameList.add(userName);
-            Log.d(Const.LoggerTag,"add cacheList:@" + userName);
+            Log.d(Const.LOGGER_TAG,"add cacheList:@" + userName);
         }
     }
 
     @Override
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-        Log.d(Const.LoggerTag,"Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
+        Log.d(Const.LOGGER_TAG,"Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
     }
 
     @Override
     public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
-        Log.d(Const.LoggerTag,"Got track limitation notice:" + numberOfLimitedStatuses);
+        Log.d(Const.LOGGER_TAG,"Got track limitation notice:" + numberOfLimitedStatuses);
     }
 
     @Override
     public void onScrubGeo(long userId, long upToStatusId) {
-        Log.d(Const.LoggerTag,"Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
+        Log.d(Const.LOGGER_TAG,"Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
     }
 
     @Override
