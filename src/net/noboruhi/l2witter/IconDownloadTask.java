@@ -55,17 +55,20 @@ public class IconDownloadTask extends AsyncTask<Void, Void, Void> {
         } catch (TwitterException e) {
             Log.e(Const.LOGGER_TAG,  e.getMessage());
         }
+        
         // まとめて取得したユーザ名に対してアイコンを得る
         try {
-            for (User user : responseList) {
-                URL url =  new URL(user.getProfileImageURL());
-                Log.d(Const.LOGGER_TAG, "Start Get icon url: "+url);
-                URLConnection connection = url.openConnection();
-                InputStream inputStream = connection.getInputStream();
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                if (bitmap != null) {
-                    cache.put(user.getScreenName(),bitmap );
-                    Log.d(Const.LOGGER_TAG, "Chached icon :@"+user.getScreenName());
+            if (responseList != null) {
+                for (User user : responseList) {
+                    URL url =  new URL(user.getProfileImageURL());
+                    Log.d(Const.LOGGER_TAG, "Start Get icon url: "+url);
+                    URLConnection connection = url.openConnection();
+                    InputStream inputStream = connection.getInputStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    if (bitmap != null) {
+                        cache.put(user.getScreenName(),bitmap );
+                        Log.d(Const.LOGGER_TAG, "Chached icon :@"+user.getScreenName());
+                    }
                 }
             }
         } catch (IOException e) {
